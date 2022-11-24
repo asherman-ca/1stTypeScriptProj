@@ -9,9 +9,11 @@ import { NoteData, Tag } from '../App';
 // void means it expects nothing in return
 type NoteFormProps = {
 	onSubmit: (data: NoteData) => void;
+	onAddTag: (tag: Tag) => void;
+	availableTags: Tag[];
 };
 
-const NoteForm = ({ onSubmit }: NoteFormProps) => {
+const NoteForm = ({ onSubmit, onAddTag, availableTags }: NoteFormProps) => {
 	// stores values inside these refs instead of using useState pattern
 	const titleRef = useRef<HTMLInputElement>(null);
 	const markdownRef = useRef<HTMLTextAreaElement>(null);
@@ -43,7 +45,7 @@ const NoteForm = ({ onSubmit }: NoteFormProps) => {
 							<CreatableReactSelect
 								onCreateOption={(label) => {
 									const newTag = { id: uuidV4(), label };
-									// onAddTag(newTag)
+									onAddTag(newTag);
 									setSelectedTags((prev) => [...prev, newTag]);
 								}}
 								value={selectedTags.map((tag) => {
@@ -56,13 +58,19 @@ const NoteForm = ({ onSubmit }: NoteFormProps) => {
 										})
 									);
 								}}
+								options={
+									availableTags &&
+									availableTags.map((tag) => {
+										return { label: tag.label, value: tag.id };
+									})
+								}
 								isMulti
 							/>
 						</Form.Group>
 					</Col>
 				</Row>
 				<Form.Group controlId='markdown'>
-					<Form.Label>Tags</Form.Label>
+					<Form.Label>Body</Form.Label>
 					<Form.Control required as='textarea' ref={markdownRef} rows={15} />
 				</Form.Group>
 				<Stack direction='horizontal' gap={2} className='justify-content-end'>
