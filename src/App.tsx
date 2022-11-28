@@ -9,6 +9,7 @@ import EditNote from './Components/EditNote';
 import NewNote from './Components/NewNote';
 import NoteList from './Components/NoteList';
 import NoteLayout from './Components/NoteLayout';
+import Note from './Components/Note';
 
 export type Note = {
 	id: string;
@@ -61,6 +62,12 @@ const App = () => {
 		setTags((prev) => [...prev, tag]);
 	};
 
+	function onDeleteNote(id: string) {
+		setNotes((prevNotes) => {
+			return prevNotes.filter((note) => note.id !== id);
+		});
+	}
+
 	return (
 		<Container className='my-4'>
 			<Routes>
@@ -79,7 +86,7 @@ const App = () => {
 					}
 				/>
 				<Route path='/:id' element={<NoteLayout notes={notesWithTags} />}>
-					<Route index element={<h1>show</h1>} />
+					<Route index element={<Note onDelete={onDeleteNote} />} />
 					<Route path='edit' element={<EditNote />} />
 				</Route>
 
