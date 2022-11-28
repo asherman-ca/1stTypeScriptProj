@@ -8,6 +8,7 @@ import { useLocalStorage } from './useLocalStorage';
 import EditNote from './Components/EditNote';
 import NewNote from './Components/NewNote';
 import NoteList from './Components/NoteList';
+import NoteLayout from './Components/NoteLayout';
 
 export type Note = {
 	id: string;
@@ -77,7 +78,7 @@ const App = () => {
 						/>
 					}
 				/>
-				<Route path='/:id'>
+				<Route path='/:id' element={<NoteLayout notes={notesWithTags} />}>
 					<Route index element={<h1>show</h1>} />
 					<Route path='edit' element={<EditNote />} />
 				</Route>

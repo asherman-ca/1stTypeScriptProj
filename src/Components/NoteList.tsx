@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import ReactSelect from 'react-select';
 import styles from './NoteList.module.css';
 
-import { Note, Tag } from '../App';
+import { Tag } from '../App';
 
 type SimplifiedNote = {
 	tags: Tag[];
